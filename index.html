@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower Shop Manager</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #fff7fb;
+            color: #333;
+        }
+
+        header {
+            padding: 30px;
+            text-align: center;
+            background: #d96b8a;
+            color: white;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .number {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .cards {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🌷 Flower Shop Manager</h1>
+    <p>ระบบจัดการร้านดอกไม้และวิเคราะห์ข้อมูลการขาย</p>
+</header>
+
+<div class="container">
+
+    <h2>Dashboard</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>🌷 Flowers</h3>
+            <div class="number">25</div>
+            <p>จำนวนดอกไม้</p>
+        </div>
+
+        <div class="card">
+            <h3>🛒 Sales</h3>
+            <div class="number">48</div>
+            <p>รายการขาย</p>
+        </div>
+
+        <div class="card">
+            <h3>💰 Revenue</h3>
+            <div class="number">8,950</div>
+            <p>ยอดขายรวม</p>
+        </div>
+
+        <div class="card">
+            <h3>⭐ Best Seller</h3>
+            <div class="number">Rose</div>
+            <p>ดอกไม้ขายดีที่สุด</p>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
