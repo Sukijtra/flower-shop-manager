@@ -7,12 +7,14 @@
 **อาจารย์ผู้สอน:** ผศ. บุญสืบ ไวคำ
 
 ---
-👥 สมาชิกในทีม
-สมาชิก	ชื่อเล่น	Sprint 1	Sprint 2	Sprint 3
-นางสาวรพีพรรณ ศรีบุญเรือง	มีน	Planner / Architect	Coder / Dev	Debugger / QA
-นางสาวสุกิจตรา โคแสงรักษา	องุ่น	Coder / Dev	Debugger / QA	Planner / Architect
-นางสาววิยดา มูลกัน	วิว	Debugger / QA	Planner / Architect	Coder / Dev
-นายศุภกร กงชา	แม็ก	Debugger / QA	Planner / Architect	Coder / Dev
+## 👥 สมาชิกในทีม
+
+| สมาชิก                    | ชื่อเล่น | Sprint 1            | Sprint 2            | Sprint 3            |
+| ------------------------- | -------- | ------------------- | ------------------- | ------------------- |
+| นางสาวรพีพรรณ ศรีบุญเรือง | มีน      | Planner / Architect | Coder / Dev         | Debugger / QA       |
+| นางสาวสุกิจตรา โคแสงรักษา | องุ่น    | Coder / Dev         | Debugger / QA       | Planner / Architect |
+| นางสาววิยดา มูลกัน        | วิว      | Debugger / QA       | Planner / Architect | Coder / Dev         |
+| นายศุภกร กงชา             | แม็ก     | Debugger / QA       | Planner / Architect | Coder / Dev         |
 
 ---
 
