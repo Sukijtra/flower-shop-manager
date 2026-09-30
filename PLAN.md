@@ -60,6 +60,7 @@
 
 ระบบถูกออกแบบตามหลัก Layered Architecture เพื่อแยกหน้าที่การทำงานออกจากกันอย่างชัดเจน
 
+```mermaid
 flowchart TD
     MAIN["<b>main.py</b><br/>จุดเริ่มโปรแกรม (Interactive CLI & --demo Mode)"]
     PRES["<b>Presentation Layer</b><br/>src/cli_app.py / src/web/<br/>(CLI Interface & Web Dashboard UI)"]
