@@ -60,32 +60,19 @@
 
 ระบบถูกออกแบบตามหลัก Layered Architecture เพื่อแยกหน้าที่การทำงานออกจากกันอย่างชัดเจน
 
-┌────────────────────────────────────────────────────────────────────────┐
-│                               main.py                                  │
-│             จุดเริ่มโปรแกรม (Interactive CLI & --demo Mode)            │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│                          Presentation Layer                            │
-│                  src/cli_app.py  /  src/web/                           │
-│                (CLI Interface & Web Dashboard UI)                      │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│                         Business Logic Layer                           │
-│                        src/flower_service.py                           │
-│            (Flower Management, Sales Operations & Statistics)          │
-└───────────────┬───────────────────┬───────────────────┬────────────────┘
-                │                   │                   │
-                ▼                   ▼                   ▼
-┌───────────────────────┐ ┌───────────────────┐ ┌───────────────────┐
-│     API Gateway       │ │ Data Access Layer │ │ Report & Visuals  │
-│   src/flower_api.py   │ │ src/data_store.py │ │src/report_generator│
-│ (External Flower API) │ │(SQLite / JSON)    │ │(CSV / Matplotlib) │
-└───────────────────────┘ └───────────────────┘ └───────────────────┘
+flowchart TD
+    MAIN["<b>main.py</b><br/>จุดเริ่มโปรแกรม (Interactive CLI & --demo Mode)"]
+    PRES["<b>Presentation Layer</b><br/>src/cli_app.py / src/web/<br/>(CLI Interface & Web Dashboard UI)"]
+    BIZ["<b>Business Logic Layer</b><br/>src/flower_service.py<br/>(Flower Manager, Sales & Statistics)"]
+    API["<b>API Gateway</b><br/>src/flower_api.py<br/>(External Flower API Integration)"]
+    DATA["<b>Data Access Layer</b><br/>src/data_store.py<br/>(SQLite Database / JSON Persistence)"]
+    REPORT["<b>Report & Data Visualization</b><br/>src/report_generator.py<br/>(CSV Export & Matplotlib Charts)"]
 
+    MAIN --> PRES
+    PRES --> BIZ
+    BIZ --> API
+    BIZ --> DATA
+    BIZ --> REPORT
 
 ---
 
