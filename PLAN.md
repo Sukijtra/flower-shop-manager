@@ -58,14 +58,33 @@
 
 ## 4. สถาปัตยกรรมระบบ (Separation of Concerns)
 
-ระบบถูกออกแบบตามหลัก Layered Architecture เพื่อแยกหน้าที่การทำงานออกจากกันชัดเจน
-main.py                   จุดเริ่มโปรแกรม (Supports Interactive CLI & --demo Mode)
-|
-+--> src/cli_app.py / web/  Presentation Layer (CLI Interface & Web Dashboard UI)
-+--> src/flower_service.py  Business Logic Layer (Flower Manager, Sales & Statistics)
-+--> src/flower_api.py      API Gateway (External Flower API Integration)
-+--> src/data_store.py      Data Access Layer (SQLite Database / JSON Persistence)
-+--> src/report_generator   Report & Data Visualization (CSV Export & Matplotlib Charts)
+ระบบถูกออกแบบตามหลัก Layered Architecture เพื่อแยกหน้าที่การทำงานออกจากกันอย่างชัดเจน
+
+┌────────────────────────────────────────────────────────────────────────┐
+│                               main.py                                  │
+│             จุดเริ่มโปรแกรม (Interactive CLI & --demo Mode)            │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                          Presentation Layer                            │
+│                  src/cli_app.py  /  src/web/                           │
+│                (CLI Interface & Web Dashboard UI)                      │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                         Business Logic Layer                           │
+│                        src/flower_service.py                           │
+│            (Flower Management, Sales Operations & Statistics)          │
+└───────────────┬───────────────────┬───────────────────┬────────────────┘
+                │                   │                   │
+                ▼                   ▼                   ▼
+┌───────────────────────┐ ┌───────────────────┐ ┌───────────────────┐
+│     API Gateway       │ │ Data Access Layer │ │ Report & Visuals  │
+│   src/flower_api.py   │ │ src/data_store.py │ │src/report_generator│
+│ (External Flower API) │ │(SQLite / JSON)    │ │(CSV / Matplotlib) │
+└───────────────────────┘ └───────────────────┘ └───────────────────┘
 
 
 ---
