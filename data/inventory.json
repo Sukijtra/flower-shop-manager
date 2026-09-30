@@ -1,0 +1,19 @@
+[
+    {
+        "flower_id": "F001",
+        "name": "กุหลาบแดง",
+        "price": 50.0,
+        "stock": 100,
+        "category": "Rose",
+        "type": "Fresh",
+        "expiry_date": "2026-10-15"
+    },
+    {
+        "flower_id": "F002",
+        "name": "ทานตะวัน",
+        "price": 35.0,
+        "stock": 45,
+        "category": "Sunflower",
+        "type": "General"
+    }
+]
