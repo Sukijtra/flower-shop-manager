@@ -505,3 +505,35 @@ Flower-Shop-Manager/
 # 🌷 Expected Result
 
 Flower Shop Manager จะช่วยจัดการข้อมูลดอกไม้และข้อมูลการขายให้อยู่ในระบบเดียว โดยผู้ใช้สามารถค้นหาและจัดการข้อมูลดอกไม้ บันทึกข้อมูลการขาย และดูสถิติที่สำคัญได้ นอกจากนี้ยังสามารถนำข้อมูลไปสร้างรายงานและกราฟเพื่อช่วยให้เห็นภาพรวมของการขายได้ชัดเจนมากขึ้น
+
+
+# Flower Shop Manager 🌸
+
+ระบบบริหารจัดการร้านดอกไม้และวิเคราะห์ข้อมูลสต็อกสินค้า (CP352301 Script Programming Project)
+
+---
+
+## 📌 ฟีเจอร์หลัก (Key Features)
+- **จัดการสินค้า (CRUD Operations):** เพิ่ม ลบ แก้ไข และปรับปรุงจำนวนสต็อกดอกไม้
+- **รองรับประเภทดอกไม้สด (Polymorphism):** จัดการข้อมูลดอกไม้สดที่มีวันหมดอายุ
+- **ค้นหาและกรองข้อมูล (Search & Filter):** ค้นหาตามชื่อ กรองตามหมวดหมู่และช่วงราคา
+- **เรียงลำดับ (Sorting Algorithms):** จัดเรียงสินค้าตามราคาและจำนวนสต็อกคงเหลือ
+- **บันทึกข้อมูลอัตโนมัติ (Data Persistence):** บันทึกลงไฟล์ JSON อัตโนมัติพร้อมระบบ Auto-Backup กันไฟล์เสียหาย
+
+---
+
+## 🏗️ สถาปัตยกรรมระบบ (Architecture)
+ระบบถูกออกแบบตามหลัก **Layered Architecture** เพื่อแยกส่วนการทำงานออกจากกันชัดเจน:
+- **Presentation Layer (`src/cli_interface.py`):** จัดการส่วนแสดงผลเมนู CLI และ Input Validation
+- **Business Logic Layer (`src/flower_manager.py`):** ประมวลผลตรรกะร้านค้า ค้นหา กรอง และเรียงลำดับ
+- **Domain Models (`src/flower.py`):** คลาส `Flower` และ `FreshFlower`
+- **Data Access Layer (`src/data_persistence.py`):** อ่าน/เขียนไฟล์ `data/inventory.json`
+
+---
+
+## 🚀 วิธีการติดตั้งและใช้งาน (Getting Started)
+
+1. **Clone Repository:**
+   ```bash
+   git clone [https://github.com/Sukijtra/flower-shop-manager.git](https://github.com/Sukijtra/flower-shop-manager.git)
+   cd flower-shop-manager
