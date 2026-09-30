@@ -39,13 +39,6 @@
 | Sprint 2 | วิยดา (วิว) · ศุภกร (แม็ก) | รพีพรรณ (มีน) | สุกิจตรา (องุ่น) |
 | Sprint 3 | สุกิจตรา (องุ่น) | วิยดา (วิว) · ศุภกร (แม็ก) | รพีพรรณ (มีน) |
 
-| สมาชิก | ชื่อเล่น | รหัสนักศึกษา | เคยเป็น Planner | เคยเป็น Coder | เคยเป็น QA |
-|---|---|---|---|---|---|
-| นางสาวรพีพรรณ ศรีบุญเรือง | มีน | 66xxxxxxxx-x | Sprint 1 | Sprint 2 | Sprint 3 |
-| นางสาวสุกิจตรา โคแสงรักษา | องุ่น | 66xxxxxxxx-x | Sprint 3 | Sprint 1 | Sprint 2 |
-| นางสาววิยดา มูลกัน | วิว | 66xxxxxxxx-x | Sprint 2 | Sprint 3 | Sprint 1 |
-| นายศุภกร กงชา | แม็ก | 66xxxxxxxx-x | Sprint 2 | Sprint 3 | Sprint 1 |
-
 ---
 
 ## 3. Reproducible Artifact Readiness Check
@@ -163,25 +156,79 @@
 | 3.5 | ชุดการทดสอบ Automated Tests ผ่านทั้งหมด 100% บน CI Pipeline | GitHub Actions | ผ่าน |
 
 ---
+ได้เลย เดี๋ยวปรับรูปแบบให้เป็น **README ที่ดูเป็นระเบียบ อ่านง่าย และเหมาะกับการใส่ใน VS Code** โดยยังคงเนื้อหาทางเทคนิคเดิมไว้ แต่จัดหัวข้อ ตาราง และโค้ดให้สวยขึ้น
 
-## 8. สถาปัตยกรรม (Separation of Concerns)
+## 8. สถาปัตยกรรมระบบ (System Architecture)
+
+โปรเจกต์ใช้แนวคิด **Separation of Concerns (SoC)** โดยแบ่งหน้าที่ของแต่ละส่วนออกจากกันอย่างชัดเจน ทำให้สามารถพัฒนา ทดสอบ และแก้ไขแต่ละส่วนได้ง่าย
 
 ```text
-main.py                   จุดเริ่มต้นโปรแกรม (รองรับ --demo)
-   |
-   v
-src/cli.py                Presentation Layer — การจัดการเมนูและการรับคำสั่งจากผู้ใช้
-   |
-   +--> src/ui.py         Presentation Layer — แสดงผลข้อความ ตาราง และรูปแบบสี
-   +--> src/validators.py Validation Layer   — ตรวจสอบความถูกต้องของ Input (ไม่มี Print/Input)
-   +--> src/models.py     Domain Layer       — Data Classes (Flower, Order, OrderItem)
-   +--> src/sales.py      Domain Logic Layer — กฎการขาย การตัดสต็อก และคำนวณสถิติ
-   +--> src/reports.py    Reporting Layer    — สร้างรายงานสรุป และส่งออกไฟล์ CSV
-   +--> src/charts.py     Visualization Layer— วาดกราฟด้วย Matplotlib
-   +--> src/api_gateway.py Integration Layer — เชื่อมต่อ Public Flower API (พร้อม Mock Fallback)
-   +--> src/database.py   Data Access Layer  — บันทึก/อ่าน ข้อมูล SQLite Database
+main.py
+│
+│  จุดเริ่มต้นโปรแกรม
+│  รองรับการทำงานแบบ --demo
+│
+▼
+src/cli.py
+Presentation Layer
+│
+├── src/ui.py
+│   └── แสดงเมนู ตาราง และข้อความต่าง ๆ
+│
+├── src/validators.py
+│   └── ตรวจสอบความถูกต้องของข้อมูล Input
+│
+├── src/models.py
+│   └── Data Models
+│       ├── Flower
+│       ├── Order
+│       └── OrderItem
+│
+├── src/sales.py
+│   └── Sales & Business Logic
+│       ├── การสร้างคำสั่งซื้อ
+│       ├── การคำนวณยอดขาย
+│       └── การจัดการ Stock
+│
+├── src/reports.py
+│   └── Reporting Layer
+│       ├── สรุปยอดขาย
+│       └── Export CSV
+│
+├── src/charts.py
+│   └── Visualization Layer
+│       └── สร้างกราฟด้วย Matplotlib
+│
+├── src/api_gateway.py
+│   └── Integration Layer
+│       ├── เชื่อมต่อ Flower API
+│       └── Mock / Fallback Data
+│
+└── src/database.py
+    └── Data Access Layer
+        └── SQLite Database
+```
+
+### หน้าที่ของแต่ละ Layer
+
+| Layer          | ไฟล์             | หน้าที่                              |
+| -------------- | ---------------- | ------------------------------------ |
+| Entry Point    | `main.py`        | เริ่มต้นโปรแกรมและรองรับ Demo Mode   |
+| Presentation   | `cli.py`         | จัดการเมนูและคำสั่งจากผู้ใช้         |
+| UI             | `ui.py`          | แสดงข้อความ ตาราง และรูปแบบการแสดงผล |
+| Validation     | `validators.py`  | ตรวจสอบข้อมูลก่อนนำไปใช้งาน          |
+| Domain         | `models.py`      | จัดการ Data Model ของระบบ            |
+| Business Logic | `sales.py`       | จัดการการขาย Stock และสถิติ          |
+| Reporting      | `reports.py`     | สร้างรายงานและ Export CSV            |
+| Visualization  | `charts.py`      | สร้างกราฟด้วย Matplotlib             |
+| Integration    | `api_gateway.py` | เชื่อมต่อ External Flower API        |
+| Data Access    | `database.py`    | จัดการ SQLite Database               |
+
+---
 
 ## 9. UML Class Diagram
+
+โครงสร้างคลาสหลักของระบบสามารถแสดงได้ดังนี้
 
 ```mermaid
 classDiagram
@@ -195,7 +242,7 @@ classDiagram
         +int stock
         +str description
         +to_dict()
-        +from_dict(data)$
+        +from_dict(data)
     }
 
     class OrderItem {
@@ -236,54 +283,169 @@ classDiagram
 
     Order "1" o-- "*" OrderItem : contains
     OrderItem "*" o-- "1" Flower : references
+
     SalesManager ..> DatabaseManager : uses
     SalesManager ..> Order : manages
     DatabaseManager ..> Flower : stores
+```
+
+### ความสัมพันธ์ของคลาส
+
+* `Order` สามารถประกอบด้วย `OrderItem` หลายรายการ
+* `OrderItem` อ้างอิงข้อมูลจาก `Flower`
+* `SalesManager` ใช้ `DatabaseManager` สำหรับจัดการข้อมูล
+* `SalesManager` จัดการกระบวนการสร้างและคำนวณคำสั่งซื้อ
+* `DatabaseManager` ทำหน้าที่บันทึกและอ่านข้อมูล `Flower`
+* `FlowerAPIGateway` ใช้สำหรับดึงข้อมูลดอกไม้จาก External API
+
+---
+
 ## 10. Data Model & Database Schema
 
-ใช้ **SQLite Database** (`data/flower_shop.db`) ในการจัดเก็บข้อมูลหลัก
+ระบบใช้ **SQLite** เป็นฐานข้อมูลหลัก โดยจัดเก็บไฟล์ฐานข้อมูลไว้ที่
 
-### 10.1 Schema: `flowers` (ตารางข้อมูลดอกไม้)
+```text
+data/flower_shop.db
+```
 
-| ฟิลด์ | ชนิด | ข้อกำหนด | ความหมาย |
-|---|---|---|---|
-| `id` | `INTEGER` | `PRIMARY KEY AUTOINCREMENT` | รหัสอ้างอิงดอกไม้ |
-| `name` | `TEXT` | `NOT NULL` | ชื่อดอกไม้ |
-| `category` | `TEXT` | `NOT NULL` | ประเภทดอกไม้ (เช่น Rose, Lily, Orchid) |
-| `price` | `REAL` | `NOT NULL` | ราคาขายต่อหน่วย |
-| `stock` | `INTEGER` | `NOT NULL DEFAULT 0` | จำนวนสินค้าในคลัง |
-| `description` | `TEXT` | `NULL` | รายละเอียด/คำอธิบาย |
+### 10.1 ตาราง `flowers`
 
-### 10.2 Schema: `orders` (ตารางประวัติการขาย)
+ตาราง `flowers` ใช้สำหรับเก็บข้อมูลดอกไม้และจำนวนสินค้าในคลัง
 
-| ฟิลด์ | ชนิด | ข้อกำหนด | ความหมาย |
-|---|---|---|---|
-| `id` | `INTEGER` | `PRIMARY KEY AUTOINCREMENT` | รหัสใบสั่งซื้อ |
-| `order_date` | `TEXT` | `NOT NULL` | วันที่และเวลาที่ทำรายการ |
-| `total_amount` | `REAL` | `NOT NULL` | ราคารวมทั้งสิ้น |
+| Field         | Type    | Constraint                | Description       |
+| ------------- | ------- | ------------------------- | ----------------- |
+| `id`          | INTEGER | PRIMARY KEY AUTOINCREMENT | รหัสอ้างอิงดอกไม้ |
+| `name`        | TEXT    | NOT NULL                  | ชื่อดอกไม้        |
+| `category`    | TEXT    | NOT NULL                  | ประเภทดอกไม้      |
+| `price`       | REAL    | NOT NULL                  | ราคาขายต่อหน่วย   |
+| `stock`       | INTEGER | NOT NULL DEFAULT 0        | จำนวนสินค้าในคลัง |
+| `description` | TEXT    | NULL                      | รายละเอียดดอกไม้  |
+
+ตัวอย่างประเภทดอกไม้:
+
+```text
+Rose
+Lily
+Orchid
+Sunflower
+Tulip
+```
+
+### 10.2 ตาราง `orders`
+
+ตาราง `orders` ใช้สำหรับจัดเก็บประวัติการขาย
+
+| Field          | Type    | Constraint                | Description              |
+| -------------- | ------- | ------------------------- | ------------------------ |
+| `id`           | INTEGER | PRIMARY KEY AUTOINCREMENT | รหัสคำสั่งซื้อ           |
+| `order_date`   | TEXT    | NOT NULL                  | วันที่และเวลาที่ทำรายการ |
+| `total_amount` | REAL    | NOT NULL                  | ยอดรวมของคำสั่งซื้อ      |
+
+### Database Flow
+
+```text
+Flower Data
+    │
+    ▼
+SQLite Database
+    │
+    ├── flowers
+    │
+    └── orders
+          │
+          ▼
+     Sales Manager
+          │
+          ▼
+   Reports / Statistics
+```
 
 ---
 
 ## 11. กลยุทธ์การทดสอบ (Testing Strategy)
 
-เน้นการทดสอบแบบเปิดเครื่องรันอัตโนมัติ (Automated Testing) ที่ทำงานรวดเร็วและไม่ขึ้นกับปัจจัยภายนอก
+ระบบใช้แนวทาง **Automated Testing** ด้วย `pytest` เพื่อให้สามารถตรวจสอบการทำงานของแต่ละโมดูลได้อย่างรวดเร็ว และลดการพึ่งพาปัจจัยภายนอก
 
-| ส่วนที่ทดสอบยาก | วิธีแก้ไข / กลยุทธ์ที่ใช้ |
-|---|---|
-| **การเชื่อมต่อ External API** | ใช้ Mocking Object และ Fallback Dataset เพื่อทดสอบ API Client โดยไม่ต้องพึ่งพาทราฟฟิกเครือข่ายจริง |
-| **การใช้งาน SQLite DB** | ใช้ In-Memory SQLite Database (`:memory:`) สำหรับการรัน Test Suite เพื่อความรวดเร็วและไม่สร้างไฟล์ขยะ |
-| **ส่วนการแสดงผล CLI** | แยก Validation Logic ออกจาก UI (`validators.py`) เพื่อให้สามารถรัน Unit Test ค่า Input ต่างๆ ได้โดยตรง |
-| **การสร้างไฟล์ / กราฟ** | ใช้ `tmp_path` fixture ของ Pytest ในการทดสอบการส่งออก CSV และการ Rendering ภาพกราฟ |
+| ส่วนที่ทดสอบ     | วิธีการทดสอบ                                                            |
+| ---------------- | ----------------------------------------------------------------------- |
+| External API     | ใช้ Mock Object และ Fallback Dataset เพื่อไม่ต้องเรียก API จริงทุกครั้ง |
+| SQLite Database  | ใช้ In-Memory SQLite (`:memory:`) สำหรับการทดสอบ                        |
+| Input Validation | แยก Validation Logic ออกจาก UI เพื่อให้ทดสอบแต่ละกรณีได้โดยตรง          |
+| CSV Export       | ใช้ `tmp_path` ของ Pytest สำหรับสร้างไฟล์ชั่วคราว                       |
+| Chart Generator  | ใช้ `tmp_path` สำหรับทดสอบการสร้างไฟล์กราฟ                              |
+| Sales Logic      | ทดสอบการคำนวณยอดขายและการตัด Stock                                      |
+
+### Testing Flow
+
+```text
+        Pytest
+           │
+           ▼
+   ┌─────────────────┐
+   │   Test Modules  │
+   └────────┬────────┘
+            │
+     ┌──────┼───────┐
+     ▼      ▼       ▼
+    API     DB    Business
+     │      │       │
+     └──────┼───────┘
+            ▼
+       Test Result
+            │
+      ┌─────┴─────┐
+      ▼           ▼
+    PASSED       FAILED
+```
 
 ---
 
-## 12. สรุปผลการทดสอบและการทำงานระบบ
+## 12. สรุปผลการทดสอบ (Test Results)
 
-| การทดสอบ / โมดูล | ไฟล์ทดสอบ | จำนวนเคส | สถานะ |
-|---|---|---|---|
-| API Gateway & Fallback | `tests/test_api.py` | 12 | ผ่านทั้งหมด |
-| Input Validation | `tests/test_validators.py` | 18 | ผ่านทั้งหมด |
-| Database & CRUD Operations | `tests/test_database.py` | 25 | ผ่านทั้งหมด |
-| Sales Logic & Stock Management | `tests/test_sales.py` | 20 | ผ่านทั้งหมด |
-| Report & Chart Generator | `tests/test_reports.py` | 15 | ผ่านทั้งหมด |
-| **รวมทั้งสิ้น** | **5 ไฟล์** | **90 เคส** | **Passed 100% · Flake8 0 Issues** |
+การทดสอบระบบครอบคลุมส่วนสำคัญของโปรเจกต์ ได้แก่ API Gateway, Validation, Database, Sales Logic, Report และ Chart Generator
+
+| Module                   | Test File                  | Test Cases | Result     |
+| ------------------------ | -------------------------- | ---------: | ---------- |
+| API Gateway & Fallback   | `tests/test_api.py`        |         12 | Passed     |
+| Input Validation         | `tests/test_validators.py` |         18 | Passed     |
+| Database & CRUD          | `tests/test_database.py`   |         25 | Passed     |
+| Sales Logic & Stock      | `tests/test_sales.py`      |         20 | Passed     |
+| Report & Chart Generator | `tests/test_reports.py`    |         15 | Passed     |
+| **Total**                | **5 Test Files**           |     **90** | **Passed** |
+
+### ผลการทดสอบโดยรวม
+
+```text
+Total Test Cases : 90
+Passed           : 90
+Failed           : 0
+Success Rate     : 100%
+Flake8 Issues    : 0
+```
+
+### สรุป
+
+ระบบสามารถทำงานและผ่านการทดสอบในส่วนหลักของโปรแกรมทั้งหมด โดยมีการแยกหน้าที่ของแต่ละโมดูลอย่างชัดเจน และใช้ Automated Testing เพื่อช่วยตรวจสอบความถูกต้องของระบบ
+
+```text
+                 Flower Shop Manager
+                         │
+          ┌──────────────┼──────────────┐
+          ▼              ▼              ▼
+       API Gateway    SQLite DB     CLI / UI
+          │              │              │
+          └──────────────┼──────────────┘
+                         ▼
+                   Sales Manager
+                         │
+              ┌──────────┴──────────┐
+              ▼                     ▼
+          Reports                Charts
+              │                     │
+              └──────────┬──────────┘
+                         ▼
+                   Test Suite
+                         │
+                         ▼
+                 90 Tests Passed
+```
